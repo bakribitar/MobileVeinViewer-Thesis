@@ -1,60 +1,125 @@
-# LaTeX template for TUM theses
+# MobileVeinViewer — Thesis
 
-This is a LaTeX template created according to the guidelines for TUM Informatics theses in SS 2016. **Always check the [current formatting guidelines][thesis-guidelines] before you hand in.** See [`build/main.pdf`][sample-pdf] for an example PDF created with this template.
+**Vein Viewing System Using Hardware Extension Attached To Smartphones**
 
-Comments and contributions are welcome!
+Master's Thesis in Informatics  
+Technische Universität München, Department of Informatics  
+Author: Bakri Bitar &nbsp;|&nbsp; Supervisor: Prof. Dr. Uwe Baumgarten  
+Submission Date: November 15, 2018
 
-## Super Quickstart
+📱 **[View the Android application repository](https://github.com/bakribitar/MobileVeinViewer)**
 
- * Clone this repository
- * Install dependencies: `sudo apt-get install texlive-latex-base biber inotify-tools`
- * Before you start editing, enable automatic compilation by executing `./helputils.sh 2` in a bash shell. Later, when you edit tex files and save your changes, the PDF will be updated automatically. Obviously **in case you have some major LaTex syntax error the automatic compilation will fail**
- * Look for `TODO` comments in the provided tex files to get hints where to start
- * When you have updated your bibliography in the bib file execute `./helputils.sh 5` to update the PDF
- * I strongly recommend using Git while you write your thesis as it's the only sane way to track changes and keep multiple versions of your files. If you decide to do so, maybe you will find useful deleting the built files and trailing whitespaces from your files before doing commits. Do so by executing `./helputils.sh 3 4`. In order to view all options of the helping script type: `./helputils.sh`
+---
 
+## Abstract
 
-If you have any problems with the template feel free to [create an issue][issue]. For general LaTeX questions use [TeX StackExchange][tex-se].
+The goal of this thesis is to develop a low-cost non-invasive vein viewing system on Android smartphones that helps healthcare workers identify the superficial veins, locate and examine them by providing an accurate AR image in a real-time manner.
 
-## Credits
+Venepuncture and starting an intravenous cannulation are frequently required skills in healthcare facilities for investigative or diagnostic purposes. Finding the right vein is a substantial prerequisite for such operations and could be time consuming — moreover, it is unfortunately not risk free, as numerous associated complications have been described, including misplaced puncturing or even accidental arterial puncturing and cannulation, causing a life threat or unnecessary pain and stress to the patient in best cases. Dedicated devices for viewing and locating veins have been launched in the market; although they seem to give excellent results in terms of accuracy and performance, they include advanced and expensive hardware which makes them unaffordable for some countries or clinics.
 
-This template is a modified (derived) version from [this template][orig-template-url]. The original authors are ([Florian Walch and other contributors][orig-template-authors]).
+The proposed solution includes a low-cost hardware extension attached to a smartphone and an Android application that receives and processes data sent from sensors placed on the hardware extension. On the smartphone's screen, healthcare workers should be able to see a real-time video showing the superficial veins with good contrast, and depending on that they can locate the veins and puncture them with much less probability of misplaced puncturing.
 
-## Changes made
+NIR (Near-Infrared) light at a wavelength of 940 nm via LEDs, together with a digital video camera sensitive only to the infrared spectrum (obtained by replacing the light filters in a normal webcam), were used. Because of NIR light-absorption properties of the oxygenated blood carried by the veins, it was possible to increase the peripheral veins' contrast and, using image processing algorithms, visually isolate them on the received video in real time.
 
-* The Makefile was substituted with the bash script `helputils.sh`. The script provides some useful additional functionality:
-	1. List available options (type `./helputils.sh 1`):
-		Prints all available options provided by the script.
-	2. Automatic compilation (type `./helputils.sh 2`):
-		The script enters a blocking state. When a change is detected in a tex file the script unblocks and triggers compilation. Keep in mind that changes are detected only when they are saved to disk.
-	3. Deletion of built files (type `./helputils.sh 3`):
-		Compilation generates a big number of log files in the build directory. This command cleans your build directory without deleting the produced PDF.
-	4. Deletion of trailing whitespaces from .tex, .sh and .bib files (type `./helputils.sh 4`):
-		Trailing whitespaces suck. They drive people crazy. They are parasites that eat up your disk space unnecessarily. If you happen to have digital OCD as I do, this command will help you keep your sanity. Keep your files parasite-free!
-	5. Updating bibliography (type `./helputils.sh 5`):
-		Updating your bibliography requires more than a single compilation. I don't know why this happens and I never got curious enough to find out. For performance reasons automatic compilation performs a single compilation. Hence, when you change the bib file use this command to update the references on the PDF.
-* I included the university and faculty logos in the `logos` directory. Unfortunately, the original template was pointing to invalid urls so in order to save you time finding them I added them directly in this repository. Additionally, the bash script for cropping the logos was omitted as they already have the appropriate shape.
-* A new page with Abbreviations and Acronyms was added.
+---
+
+## Thesis Contents
+
+| Chapter | Topic |
+|---------|-------|
+| 1 | Introduction — venepuncture complications, infrared radiation background, prior work |
+| 2 | Skin- and Blood-Light Interaction — wavelength selection rationale |
+| 3 | Hardware Extension — OTG cable, NIR LEDs, NIR camera, power consumption, safety |
+| 4 | Software Application — methodology, image processing modes, application architecture |
+| 5 | Results and Discussion — results on tattooed skin, different skin colours, skin diseases |
+| A | Appendix: Compatible Android Devices |
+| B | Appendix: Incompatible Android Devices |
+| C | Appendix: Verified Web Cameras |
+
+---
+
+## Reading the Thesis
+
+The compiled thesis PDF is available at [`build/main.pdf`](build/main.pdf).
+
+---
+
+## Building the PDF
+
+### Dependencies
+
+```bash
+sudo apt-get install texlive-latex-base biber inotify-tools
+```
+
+### Quick Start
+
+1. Clone this repository
+2. Enable automatic compilation (re-compiles whenever a `.tex` file is saved):
+
+```bash
+./helputils.sh 2
+```
+
+3. When you update the bibliography (`.bib` file), run a full bibliography build:
+
+```bash
+./helputils.sh 5
+```
+
+### All `helputils.sh` Commands
+
+| Command | Description |
+|---------|-------------|
+| `./helputils.sh 1` | List all available options |
+| `./helputils.sh 2` | **Automatic compilation** — watches for `.tex` file changes and recompiles |
+| `./helputils.sh 3` | Delete build artifacts (log files, etc.) without removing the PDF |
+| `./helputils.sh 4` | Remove trailing whitespaces from `.tex`, `.sh`, and `.bib` files |
+| `./helputils.sh 5` | **Full bibliography update** — required after changes to the `.bib` file |
+
+> **Tip:** Before committing to Git, run `./helputils.sh 3 4` to clean build files and strip trailing whitespace.
+
+---
+
+## Repository Structure
+
+```
+build/          # Compiled PDF output
+logos/          # TUM and faculty logos
+chapters/       # Individual thesis chapter .tex files
+figures/        # Figures and images used in the thesis
+bibliography.bib
+main.tex        # Root LaTeX document
+helputils.sh    # Build helper script
+```
+
+---
+
+## Template
+
+This thesis was written using the [TUM Informatics LaTeX Thesis Template](https://github.com/fwalch/tum-thesis-latex) by Florian Walch and contributors. The forked template introduces the following modifications over the original:
+
+- Replaced the `Makefile` with `helputils.sh` — a bash script with additional functionality (automatic compilation, artifact cleanup, whitespace removal, bibliography update)
+- University and faculty logos bundled directly in the `logos/` directory (original template pointed to invalid URLs)
+- Logo-cropping script removed (logos are already the correct shape)
+- Added an **Abbreviations and Acronyms** page
+
+---
 
 ## License
 
-[![Creative Commons License][license-image]][license]
+### Thesis Content
 
-This template is licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License][license], meaning that:
+Copyright © 2018 Bakri Bitar. All rights reserved.
 
- * You can share (copy, redistribute) and adapt (remix, transform, build upon) this template for any purpose, even commercially.
- * If you share the template or a modified (derived) version of it, you must attribute the template to the original authors [Florian Walch and contributors][orig-template-authors] by providing a [link to the original template][orig-template-url] and indicate if changes were made.
- * Any derived template has to use the [same][license] or a [compatible license][license-compatible].
+### LaTeX Template
 
-The license **applies only to the template**; there are no restrictions on the resulting PDF file or the contents of your thesis.
+[![Creative Commons License](https://i.creativecommons.org/l/by-sa/4.0/88x31.png)](http://creativecommons.org/licenses/by-sa/4.0/)
 
-[issue]: https://github.com/nnedkov/tum-thesis-latex/issues
-[license-compatible]: https://creativecommons.org/compatiblelicenses
-[license-image]: https://i.creativecommons.org/l/by-sa/4.0/88x31.png
-[license]: https://creativecommons.org/licenses/by-sa/4.0/
-[orig-template-authors]: https://github.com/fwalch/tum-thesis-latex/graphs/contributors
-[orig-template-url]: https://github.com/fwalch/tum-thesis-latex
-[sample-pdf]: https://raw.github.com/nnedkov/tum-thesis-latex/master/build/main.pdf
-[template-download]: https://github.com/nnedkov/tum-thesis-latex/archive/master.zip
-[tex-se]: https://tex.stackexchange.com/
-[thesis-guidelines]: http://www.in.tum.de/en/current-students/administrative-matters/thesis-guidelines-and-topics.html
+The LaTeX template is licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-sa/4.0/), meaning:
+
+- You can share (copy, redistribute) and adapt (remix, transform, build upon) this template for any purpose, even commercially.
+- If you share the template or a derived version, you must attribute the original authors Florian Walch and contributors by providing a link to the [original template](https://github.com/fwalch/tum-thesis-latex) and indicate if changes were made.
+- Any derived template must use the same or a compatible license.
+
+The license applies only to the template; there are no restrictions on the resulting PDF file or the contents of the thesis.
